@@ -17,7 +17,8 @@ export async function POST(
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        ...Object.fromEntries(request.headers.entries())
+        'Authorization': request.headers.get('authorization') || '',
+        'Accept': 'application/json'
       }
     })
     
