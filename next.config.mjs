@@ -2,7 +2,8 @@
 const nextConfig = {
   // Remove output: 'export' to enable API routes
   // output: 'export', // This was causing the API route error
-  trailingSlash: true,
+  // Remove trailingSlash as it can cause issues with API routes
+  // trailingSlash: true,
   eslint: {
     ignoreDuringBuilds: true,
   },

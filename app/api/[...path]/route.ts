@@ -20,6 +20,9 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { path: string[] } }
 ) {
+  console.log('[API Proxy] GET function called')
+  console.log('[API Proxy] Request URL:', request.url)
+  console.log('[API Proxy] Request method:', request.method)
   return handleRequest(request, params.path, 'GET')
 }
 
@@ -27,6 +30,9 @@ export async function POST(
   request: NextRequest,
   { params }: { params: { path: string[] } }
 ) {
+  console.log('[API Proxy] POST function called')
+  console.log('[API Proxy] Request URL:', request.url)
+  console.log('[API Proxy] Request method:', request.method)
   return handleRequest(request, params.path, 'POST')
 }
 
