@@ -11,7 +11,30 @@ import type {
 } from './types'
 import { useAuthStore } from './auth-store'
 
-const API_BASE_URL = 'http://65.0.7.162/api' ;
+// Use Vercel API routes in production, direct backend in development
+const getApiBaseUrl = () => {
+  // Check if we're in a browser environment
+  if (typeof window !== 'undefined') {
+    // If we're not on localhost, use the API proxy
+    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+      return '/api'
+    }
+  }
+  
+  // For localhost development, use direct backend
+  return 'http://localhost:8000/api'
+}
+
+const API_BASE_URL = getApiBaseUrl()
+
+// Debug logging
+if (typeof window !== 'undefined') {
+  console.log('🔧 API Configuration:')
+  console.log('  - API Base URL:', API_BASE_URL)
+  console.log('  - Current hostname:', window.location.hostname)
+  console.log('  - Current protocol:', window.location.protocol)
+  console.log('  - Is production:', window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1')
+}
 
 class ApiError extends Error {
   constructor(public status: number, message: string) {
