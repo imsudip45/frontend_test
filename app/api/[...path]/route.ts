@@ -6,6 +6,12 @@ export const dynamic = 'force-dynamic'
 // Your EC2 backend URL - update this with your actual EC2 public IP
 const EC2_BACKEND_URL = process.env.EC2_BACKEND_URL || 'http://65.0.7.162:8000'
 
+// Debug environment variables
+console.log('[API Proxy] Environment variables:')
+console.log('  - EC2_BACKEND_URL:', process.env.EC2_BACKEND_URL)
+console.log('  - NODE_ENV:', process.env.NODE_ENV)
+console.log('  - Using backend URL:', EC2_BACKEND_URL)
+
 // Add logging to debug environment variables
 console.log('EC2_BACKEND_URL:', process.env.EC2_BACKEND_URL)
 console.log('NODE_ENV:', process.env.NODE_ENV)
@@ -59,9 +65,6 @@ async function handleRequest(
     const searchParams = request.nextUrl.searchParams.toString()
     const fullUrl = searchParams ? `${targetUrl}?${searchParams}` : targetUrl
 
-    // Log the request for debugging
-    console.log(`[API Proxy] ${method} ${path} -> ${fullUrl}`)
-
     // Prepare headers
     const headers: HeadersInit = {
       'Content-Type': 'application/json',
@@ -89,12 +92,26 @@ async function handleRequest(
       }
     }
 
+    // Log the request for debugging
+    console.log(`[API Proxy] ${method} ${path} -> ${fullUrl}`)
+    console.log(`[API Proxy] Request method: ${method}`)
+    console.log(`[API Proxy] Request headers:`, Object.fromEntries(request.headers.entries()))
+    console.log(`[API Proxy] Request body:`, body)
+
     // Make the request to EC2 backend
+    console.log(`[API Proxy] Making fetch request to: ${fullUrl}`)
+    console.log(`[API Proxy] Fetch method: ${method}`)
+    console.log(`[API Proxy] Fetch headers:`, headers)
+    console.log(`[API Proxy] Fetch body:`, body)
+    
     const response = await fetch(fullUrl, {
       method,
       headers,
       body,
     })
+    
+    console.log(`[API Proxy] Response status: ${response.status}`)
+    console.log(`[API Proxy] Response headers:`, Object.fromEntries(response.headers.entries()))
 
     // Get response data
     let responseData: any
