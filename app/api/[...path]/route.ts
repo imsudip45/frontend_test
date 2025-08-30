@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic'
+
 // Your EC2 backend URL - update this with your actual EC2 public IP
 const EC2_BACKEND_URL = process.env.EC2_BACKEND_URL || 'http://65.0.7.162:8000'
 
