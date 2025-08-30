@@ -22,22 +22,42 @@ interface LabhyaAgentDialogProps {
 export function LabhyaAgentDialog({ children }: LabhyaAgentDialogProps) {
   const [isDownloading, setIsDownloading] = useState(false)
 
-  const handleDownload = () => {
+  const handleDownload = async () => {
     setIsDownloading(true)
-    // TODO: Replace with actual download URL for Labhya Agent installer
-    // const downloadUrl = "https://releases.labhya.com/agent/windows/labhya-agent-setup.exe"
-
-    // Simulate download
-    setTimeout(() => {
-      // Create a mock download link
+    
+    try {
+      // Use the API route to download the installer
+      const response = await fetch('/api/download/agent')
+      
+      if (!response.ok) {
+        throw new Error('Failed to download installer')
+      }
+      
+      // Get the blob from the response
+      const blob = await response.blob()
+      
+      // Create a download link
+      const url = window.URL.createObjectURL(blob)
       const link = document.createElement("a")
-      link.href = "#" // TODO: Replace with actual download URL
+      link.href = url
       link.download = "labhya-agent-setup.exe"
       document.body.appendChild(link)
       link.click()
       document.body.removeChild(link)
+      
+      // Clean up the URL object
+      window.URL.revokeObjectURL(url)
+      
+      // Show success message
+      console.log('Download completed successfully')
+      
+    } catch (error) {
+      console.error('Download failed:', error)
+      // You could show a toast notification here
+      alert('Download failed. Please try again.')
+    } finally {
       setIsDownloading(false)
-    }, 1000)
+    }
   }
 
   return (
