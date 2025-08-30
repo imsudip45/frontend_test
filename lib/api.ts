@@ -17,9 +17,7 @@ const getApiBaseUrl = () => {
   if (typeof window !== 'undefined') {
     // If we're not on localhost, use the API proxy
     if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-      // Temporarily use direct backend URL to bypass proxy issues
-      return 'http://65.0.7.162:8000/api'
-      // return '/api' // Uncomment this when proxy is working
+      return '/api'
     }
   }
   
