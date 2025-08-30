@@ -63,8 +63,11 @@ async function handleRequest(
   method: string
 ) {
   try {
-    // Construct the target URL
-    const path = pathSegments.join('/')
+    // Construct the target URL - remove trailing slash if present
+    let path = pathSegments.join('/')
+    if (path.endsWith('/')) {
+      path = path.slice(0, -1)
+    }
     const targetUrl = `${EC2_BACKEND_URL}/api/${path}`
     
     // Get the search params from the original request
