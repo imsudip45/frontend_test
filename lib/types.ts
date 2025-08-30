@@ -73,8 +73,8 @@ export interface Transaction {
   id: string
   wallet: Wallet
   amount: number
-  transaction_type: "DEPOSIT" | "WITHDRAWAL" | "PAYMENT"
-  status: "PENDING" | "COMPLETED" | "FAILED"
+  transaction_type: "DEPOSIT" | "WITHDRAWAL" | "RENTAL_PAYMENT" | "RENTAL_EARNING"
+  status: "PENDING" | "COMPLETED" | "FAILED" | "CANCELLED"
   description?: string
   wallet_owner: string
   created_at: string
