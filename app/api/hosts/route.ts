@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-
-const EC2_BACKEND_URL = process.env.EC2_BACKEND_URL || 'http://65.0.7.162'
+import { buildApiUrl } from '../../../lib/api-utils'
 
 export const dynamic = 'force-dynamic'
 
@@ -8,7 +7,7 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
     const queryString = searchParams.toString()
-    const targetUrl = `${EC2_BACKEND_URL}/api/hosts/${queryString ? `?${queryString}` : ''}`
+    const targetUrl = buildApiUrl('hosts', queryString)
     
     console.log(`🔧 Hosts GET Request: ${targetUrl}`)
     
@@ -39,7 +38,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const targetUrl = `${EC2_BACKEND_URL}/api/hosts/`
+    const targetUrl = buildApiUrl('hosts')
     
     console.log(`🔧 Hosts POST Request: ${targetUrl}`)
     console.log(`📦 Request Body:`, body)
