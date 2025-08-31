@@ -17,7 +17,8 @@ export async function GET(
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        ...Object.fromEntries(request.headers.entries())
+        'Authorization': request.headers.get('authorization') || '',
+        'Accept': 'application/json'
       }
     })
     
@@ -51,7 +52,8 @@ export async function PUT(
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        ...Object.fromEntries(request.headers.entries())
+        'Authorization': request.headers.get('authorization') || '',
+        'Accept': 'application/json'
       },
       body: JSON.stringify(body)
     })
@@ -86,7 +88,8 @@ export async function PATCH(
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        ...Object.fromEntries(request.headers.entries())
+        'Authorization': request.headers.get('authorization') || '',
+        'Accept': 'application/json'
       },
       body: JSON.stringify(body)
     })
@@ -119,7 +122,8 @@ export async function DELETE(
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        ...Object.fromEntries(request.headers.entries())
+        'Authorization': request.headers.get('authorization') || '',
+        'Accept': 'application/json'
       }
     })
     

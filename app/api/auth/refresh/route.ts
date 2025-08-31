@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        ...Object.fromEntries(request.headers.entries())
+        'Accept': 'application/json'
       },
       body: JSON.stringify(body)
     })

@@ -16,7 +16,8 @@ export async function GET(request: NextRequest) {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        ...Object.fromEntries(request.headers.entries())
+        'Authorization': request.headers.get('authorization') || '',
+        'Accept': 'application/json'
       }
     })
     
