@@ -39,8 +39,11 @@ export function RentGPUDialog({ gpu, open, onOpenChange, onConfirm }: RentGPUDia
   const handleConfirm = async () => {
     setLoading(true)
     try {
-      // Create session immediately; delegate store updates to caller
-      await api.createSession({ gpu: gpu.id })
+      // Create session and wait for the response
+      const session = await api.createSession({ gpu: gpu.id })
+      console.log("Session created successfully:", session)
+      
+      // Only show success and proceed if session was created
       await onConfirm(gpu, hours)
       onOpenChange(false)
       toast({
@@ -48,6 +51,7 @@ export function RentGPUDialog({ gpu, open, onOpenChange, onConfirm }: RentGPUDia
         description: `${gpu.gpu_name} has been rented for ${hours} hour${hours > 1 ? "s" : ""}`,
       })
     } catch (error) {
+      console.error("Failed to create session:", error)
       toast({
         title: "Rental Failed",
         description: error instanceof Error ? error.message : "Failed to rent GPU. Please try again.",

@@ -66,7 +66,8 @@ export const useAppStore = create<AppState>()((set, get) => ({
           // Try host-specific endpoint if we can get host id from API quickly
           const hostProfile = await api.getHostProfile()
           gpus = await api.getHostGPUs(hostProfile.id)
-        } catch {
+        } catch (error) {
+          console.warn('Failed to get host profile, falling back to general GPU list:', error)
           // Fallback to general list (backend filters by host for host users)
           gpus = await api.getGPUs()
         }
