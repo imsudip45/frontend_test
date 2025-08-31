@@ -86,24 +86,20 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         <Sidebar />
       </div>
 
-      {/* Mobile Sidebar */}
-      <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
-        <SheetContent side="left" className="p-0 w-64">
-          <Sidebar mobile />
-        </SheetContent>
-      </Sheet>
-
       {/* Main Content */}
       <div className="flex flex-col flex-1 md:pl-64">
         {/* Header */}
         <header className="flex h-16 items-center justify-between px-6 border-b bg-card">
           <div className="flex items-center">
-            <Sheet>
+            <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="md:hidden">
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
+              <SheetContent side="left" className="p-0 w-64">
+                <Sidebar mobile />
+              </SheetContent>
             </Sheet>
             <h1 className="ml-4 text-lg font-semibold capitalize">{role?.toLowerCase()} Dashboard</h1>
           </div>
