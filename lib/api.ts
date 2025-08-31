@@ -58,6 +58,11 @@ class ApiService {
   ): Promise<T> {
     const url = `${API_BASE_URL}${endpoint}`
     
+    console.log(`🔧 API Request: ${options.method || 'GET'} ${url}`)
+    if (options.body) {
+      console.log(`📦 Request Body:`, options.body)
+    }
+    
     const config: RequestInit = {
       headers: {
         'Content-Type': 'application/json',
@@ -82,8 +87,12 @@ class ApiService {
 
     try {
       let response = await doFetch()
+      console.log(`📡 Response Status: ${response.status} ${response.statusText}`)
+      
       if (response.ok) {
-        return await response.json()
+        const data = await response.json()
+        console.log(`✅ Response Data:`, data)
+        return data
       }
 
       // Attempt token refresh on auth errors
@@ -198,10 +207,18 @@ class ApiService {
   }
 
   async createSession(sessionData: { gpu: string }): Promise<Session> {
-    return this.request<Session>('/sessions/', {
-      method: 'POST',
-      body: JSON.stringify(sessionData),
-    })
+    console.log('🔧 Creating session with data:', sessionData)
+    try {
+      const result = await this.request<Session>('/sessions/', {
+        method: 'POST',
+        body: JSON.stringify(sessionData),
+      })
+      console.log('✅ Session created successfully:', result)
+      return result
+    } catch (error) {
+      console.error('❌ Failed to create session:', error)
+      throw error
+    }
   }
 
   async markSessionStarted(id: string, ssh_password?: string): Promise<{ message: string; session_id: string }> {
