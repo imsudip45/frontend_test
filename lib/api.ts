@@ -15,13 +15,21 @@ import { useAuthStore } from './auth-store'
 const getApiBaseUrl = () => {
   // Check if we're in a browser environment
   if (typeof window !== 'undefined') {
+    console.log('🔧 Domain Detection:')
+    console.log('  - Current hostname:', window.location.hostname)
+    console.log('  - Is localhost:', window.location.hostname === 'localhost')
+    console.log('  - Is 127.0.0.1:', window.location.hostname === '127.0.0.1')
+    console.log('  - Is production:', window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1')
+    
     // If we're not on localhost, use the API proxy
     if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+      console.log('  - Using Vercel API proxy: /api')
       return '/api'
     }
   }
   
   // For localhost development, use direct backend
+  console.log('  - Using direct backend: http://localhost:8000/api')
   return 'http://localhost:8000/api'
 }
 

@@ -43,6 +43,7 @@ export async function POST(request: NextRequest) {
     
     console.log(`🔧 Sessions POST Request: ${targetUrl}`)
     console.log(`📦 Request Body:`, body)
+    console.log(`📦 Request Headers:`, Object.fromEntries(request.headers.entries()))
     
     const response = await fetch(targetUrl, {
       method: 'POST',
@@ -57,6 +58,7 @@ export async function POST(request: NextRequest) {
     const data = await response.json()
     
     console.log(`✅ Sessions POST Response: ${response.status}`)
+    console.log(`📦 Response Data:`, data)
     
     return NextResponse.json(data, { status: response.status })
     
