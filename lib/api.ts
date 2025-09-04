@@ -30,7 +30,7 @@ const getApiBaseUrl = () => {
   
   // For localhost development, use direct backend
   console.log('  - Using direct backend: http://localhost:8000/api')
-  return 'http://localhost:8000/api'
+  return 'http://65.0.7.162/api'
 }
 
 const API_BASE_URL = getApiBaseUrl()

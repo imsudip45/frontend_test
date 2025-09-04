@@ -191,12 +191,12 @@ export default function SessionsPage() {
   }
 
   const totalEarnings = sessions
-    .filter((s) => s.status === "COMPLETED")
-    .reduce((sum, session) => sum + calculateEarnings(session), 0)
+  .filter((s) => s.status === "COMPLETED")
+  .reduce((sum, session) => sum + (session.total_cost || 0), 0);
+
 
   const currentEarnings = sessions
-    .filter((s) => s.status === "ACTIVE")
-    .reduce((sum, session) => sum + calculateEarnings(session), 0)
+    .filter((s) => s.status === "COMPLETED")[0]?.total_cost || 0;
 
   if (loading) {
     return (
